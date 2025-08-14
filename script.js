@@ -4,6 +4,7 @@ class LLMCodeGuesser {
         this.score = 0;
         this.round = 1;
         this.currentModel = '';
+        this.currentPrompt = '';
         this.gameActive = false;
         
         this.models = [
@@ -36,57 +37,48 @@ class LLMCodeGuesser {
             'x-ai/grok-4': 'Grok-4'
         };
 
-        this.codePrompts = {
-            python: [
-                "Write a function to implement binary search on a sorted list",
-                "Create a class to represent a binary tree with insert and search methods",
-                "Write a decorator that measures function execution time",
-                "Implement a simple LRU cache using a dictionary and doubly linked list",
-                "Create a function that finds the longest common subsequence between two strings"
-            ],
-            javascript: [
-                "Write a function to debounce API calls",
-                "Create a Promise-based function that retries failed requests",
-                "Implement a simple state management system using closures",
-                "Write a function that flattens a nested array recursively",
-                "Create a custom hook for handling form validation in React"
-            ],
-            java: [
-                "Implement a generic stack data structure",
-                "Write a method to check if a string is a valid palindrome",
-                "Create a thread-safe singleton pattern implementation",
-                "Write a function to merge two sorted arrays",
-                "Implement a simple observer pattern for event handling"
-            ],
-            cpp: [
-                "Implement a templated vector class with basic operations",
-                "Write a function to find the maximum subarray sum",
-                "Create a smart pointer class with reference counting",
-                "Implement a binary search tree with insertion and deletion",
-                "Write a function to reverse a linked list iteratively"
-            ],
-            rust: [
-                "Implement a safe wrapper around raw pointers",
-                "Write a function to parse JSON-like strings into a custom data structure",
-                "Create a thread-safe counter using Arc and Mutex",
-                "Implement a custom iterator for a binary tree",
-                "Write a function that handles multiple error types using Result"
-            ],
-            go: [
-                "Implement a worker pool pattern with channels",
-                "Write a function to rate limit API requests",
-                "Create a simple HTTP middleware for logging",
-                "Implement a concurrent web scraper with goroutines",
-                "Write a function to merge multiple channels into one"
-            ],
-            typescript: [
-                "Create a generic repository pattern with type safety",
-                "Write a type-safe event emitter using TypeScript generics",
-                "Implement a builder pattern for complex object construction",
-                "Create utility types for deep readonly and partial objects",
-                "Write a function with proper type guards for runtime type checking"
-            ]
-        };
+        this.codePrompts = [
+            "Write a function to implement binary search on a sorted array",
+            "Create a class to represent a binary tree with insert and search methods",
+            "Write a decorator/wrapper that measures function execution time",
+            "Implement a simple LRU cache with get and put operations",
+            "Create a function that finds the longest common subsequence between two strings",
+            "Write a function to debounce function calls",
+            "Create a function that retries failed operations with exponential backoff",
+            "Implement a simple state management system",
+            "Write a function that flattens a nested array recursively",
+            "Create a function to validate email addresses using regex",
+            "Implement a generic stack data structure with push, pop, and peek",
+            "Write a method to check if a string is a valid palindrome",
+            "Create a thread-safe singleton pattern implementation",
+            "Write a function to merge two sorted arrays",
+            "Implement a simple observer pattern for event handling",
+            "Write a function to find the maximum subarray sum (Kadane's algorithm)",
+            "Create a smart pointer or reference counting system",
+            "Implement a hash table with collision handling",
+            "Write a function to reverse a linked list iteratively",
+            "Create a function to generate Fibonacci numbers efficiently",
+            "Implement a trie data structure for prefix matching",
+            "Write a function to find the shortest path in a graph (Dijkstra's)",
+            "Create a function that implements quicksort algorithm",
+            "Write a function to detect cycles in a linked list",
+            "Implement a bloom filter for membership testing",
+            "Create a function to parse and evaluate mathematical expressions",
+            "Write a function that implements a sliding window maximum",
+            "Implement a rate limiter using token bucket algorithm",
+            "Create a function to find all anagrams in a list of words",
+            "Write a function that implements binary tree traversal (inorder, preorder, postorder)",
+            "Implement a connection pool for database connections",
+            "Create a function to solve the knapsack problem using dynamic programming",
+            "Write a function that compresses strings using run-length encoding",
+            "Implement a simple web crawler with URL queue management",
+            "Create a function to find the kth largest element in an array",
+            "Write a function that implements merge sort algorithm",
+            "Implement a circular buffer with fixed size",
+            "Create a function to validate and parse JSON strings",
+            "Write a function that finds the longest increasing subsequence",
+            "Implement a simple template engine for string interpolation"
+        ];
 
         this.initializeEventListeners();
         this.updateDisplay();
@@ -151,7 +143,12 @@ class LLMCodeGuesser {
             const randomModel = this.getRandomModel();
             this.currentModel = randomModel;
 
-            const code = await this.generateCodeWithModel(language, randomModel);
+            // Show the prompt while generating
+            const prompt = this.getRandomPrompt();
+            this.currentPrompt = prompt;
+            document.getElementById('codeDisplay').textContent = `Generating code for: "${prompt}"`;
+
+            const code = await this.generateCodeWithModel(language, randomModel, prompt);
             
             document.getElementById('codeDisplay').textContent = code;
             document.getElementById('codeDisplay').className = `language-${language}`;
@@ -172,13 +169,11 @@ class LLMCodeGuesser {
         return this.models[Math.floor(Math.random() * this.models.length)];
     }
 
-    getRandomPrompt(language) {
-        const prompts = this.codePrompts[language] || this.codePrompts.python;
-        return prompts[Math.floor(Math.random() * prompts.length)];
+    getRandomPrompt() {
+        return this.codePrompts[Math.floor(Math.random() * this.codePrompts.length)];
     }
 
-    async generateCodeWithModel(language, model) {
-        const prompt = this.getRandomPrompt(language);
+    async generateCodeWithModel(language, model, prompt) {
         const fullPrompt = `${prompt}. Write clean, well-commented ${language} code. Include only the code implementation, no explanations.`;
 
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -307,6 +302,10 @@ class LLMCodeGuesser {
     updateDisplay() {
         document.getElementById('score').textContent = this.score;
         document.getElementById('round').textContent = this.round;
+        
+        // Calculate accuracy (avoid division by zero)
+        const accuracy = this.round > 1 ? Math.round((this.score / (this.round - 1)) * 100) : 0;
+        document.getElementById('accuracy').textContent = `${accuracy}%`;
     }
 }
 
