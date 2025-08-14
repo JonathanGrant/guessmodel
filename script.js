@@ -227,6 +227,7 @@ class LLMCodeGuesser {
                         content: fullPrompt
                     }
                 ],
+                max_tokens: 2000,
                 temperature: 0.7
             })
         });
