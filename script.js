@@ -38,46 +38,65 @@ class LLMCodeGuesser {
         };
 
         this.codePrompts = [
-            "Write a function to implement binary search on a sorted array",
-            "Create a class to represent a binary tree with insert and search methods",
-            "Write a decorator/wrapper that measures function execution time",
-            "Implement a simple LRU cache with get and put operations",
-            "Create a function that finds the longest common subsequence between two strings",
-            "Write a function to debounce function calls",
-            "Create a function that retries failed operations with exponential backoff",
-            "Implement a simple state management system",
-            "Write a function that flattens a nested array recursively",
-            "Create a function to validate email addresses using regex",
-            "Implement a generic stack data structure with push, pop, and peek",
-            "Write a method to check if a string is a valid palindrome",
-            "Create a thread-safe singleton pattern implementation",
-            "Write a function to merge two sorted arrays",
-            "Implement a simple observer pattern for event handling",
-            "Write a function to find the maximum subarray sum (Kadane's algorithm)",
-            "Create a smart pointer or reference counting system",
-            "Implement a hash table with collision handling",
-            "Write a function to reverse a linked list iteratively",
-            "Create a function to generate Fibonacci numbers efficiently",
-            "Implement a trie data structure for prefix matching",
-            "Write a function to find the shortest path in a graph (Dijkstra's)",
-            "Create a function that implements quicksort algorithm",
-            "Write a function to detect cycles in a linked list",
-            "Implement a bloom filter for membership testing",
-            "Create a function to parse and evaluate mathematical expressions",
-            "Write a function that implements a sliding window maximum",
-            "Implement a rate limiter using token bucket algorithm",
-            "Create a function to find all anagrams in a list of words",
-            "Write a function that implements binary tree traversal (inorder, preorder, postorder)",
-            "Implement a connection pool for database connections",
-            "Create a function to solve the knapsack problem using dynamic programming",
-            "Write a function that compresses strings using run-length encoding",
-            "Implement a simple web crawler with URL queue management",
-            "Create a function to find the kth largest element in an array",
-            "Write a function that implements merge sort algorithm",
-            "Implement a circular buffer with fixed size",
-            "Create a function to validate and parse JSON strings",
-            "Write a function that finds the longest increasing subsequence",
-            "Implement a simple template engine for string interpolation"
+            // Data Processing & File I/O
+            "Read a CSV file, calculate column statistics, and save as Parquet format",
+            "Convert images from JPEG to PNG format with optional resizing",
+            "Parse a large JSON file and extract specific nested fields into a flat structure",
+            "Read Excel spreadsheets, merge multiple sheets, and export to CSV",
+            "Process log files to extract error patterns and generate summary reports",
+            "Convert XML data to JSON format while preserving nested structures",
+            "Read configuration files (YAML/TOML) and validate required parameters",
+            "Batch process images: resize, compress, and add watermarks",
+            "Parse HTML pages to extract structured data (web scraping)",
+            "Read PDF documents and extract text content with formatting",
+            
+            // API & Web Development
+            "Create a REST API endpoint that handles user authentication with JWT",
+            "Build a GraphQL resolver that fetches data from multiple sources",
+            "Implement rate limiting middleware for API endpoints",
+            "Create a webhook handler that validates signatures and processes payloads",
+            "Build a simple HTTP client with retry logic and timeout handling",
+            "Implement OAuth2 authentication flow with token refresh",
+            "Create a WebSocket server for real-time chat functionality",
+            "Build a proxy server that routes requests based on headers",
+            "Implement API response caching with TTL expiration",
+            "Create a health check endpoint that monitors service dependencies",
+            
+            // Database Operations
+            "Connect to a database, run queries, and handle connection pooling",
+            "Implement database migrations with rollback functionality",
+            "Create a simple ORM that maps objects to database tables",
+            "Build a query builder for dynamic SQL generation",
+            "Implement database seeding with sample data",
+            "Create stored procedures for complex business logic",
+            "Build a database backup and restore utility",
+            "Implement full-text search with ranking and filtering",
+            "Create a data synchronization system between two databases",
+            "Build a database performance monitoring tool",
+            
+            // System & DevOps
+            "Monitor system resources (CPU, memory, disk) and send alerts",
+            "Create a log aggregation system that collects from multiple sources",
+            "Build a deployment script that handles rollbacks and health checks",
+            "Implement a service discovery mechanism for microservices",
+            "Create a load balancer that distributes traffic across servers",
+            "Build a container orchestration tool for managing Docker containers",
+            "Implement automated testing pipelines with parallel execution",
+            "Create environment configuration management with secrets handling",
+            "Build a monitoring dashboard that displays real-time metrics",
+            "Implement automated backup systems with encryption and compression",
+            
+            // Machine Learning & Analytics
+            "Load data, perform feature engineering, and train a simple ML model",
+            "Implement A/B testing framework with statistical significance testing",
+            "Create a recommendation system based on user behavior patterns",
+            "Build a time series analysis tool with forecasting capabilities",
+            "Implement clustering algorithms for customer segmentation",
+            "Create a data pipeline for real-time stream processing",
+            "Build anomaly detection system for monitoring unusual patterns",
+            "Implement natural language processing for sentiment analysis",
+            "Create a feature store for ML model serving",
+            "Build a model evaluation framework with cross-validation"
         ];
 
         this.initializeEventListeners();
@@ -153,6 +172,10 @@ class LLMCodeGuesser {
             document.getElementById('codeDisplay').textContent = code;
             document.getElementById('codeDisplay').className = `language-${language}`;
             
+            // Show the prompt after code is generated
+            document.getElementById('promptDisplay').textContent = prompt;
+            document.getElementById('promptSection').style.display = 'block';
+            
             this.setupRandomModelButtons();
             this.gameActive = true;
             
@@ -192,7 +215,6 @@ class LLMCodeGuesser {
                         content: fullPrompt
                     }
                 ],
-                max_tokens: 1000,
                 temperature: 0.7
             })
         });
@@ -245,6 +267,7 @@ class LLMCodeGuesser {
 
     resetUI() {
         document.getElementById('resultSection').style.display = 'none';
+        document.getElementById('promptSection').style.display = 'none';
         document.querySelectorAll('.model-btn').forEach(btn => {
             btn.classList.remove('correct', 'incorrect');
         });
