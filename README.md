@@ -33,13 +33,23 @@ A fun web game where you try to guess which AI model wrote a given piece of code
 
 ## 🌐 Deployment
 
-### GitHub Pages (Recommended)
+### GitHub Pages with Environment Variable (Recommended)
 
+**Option 1: Automatic deployment with API key**
 1. Fork this repository
+2. Go to Settings → Secrets and variables → Actions
+3. Add a new secret: `OPENROUTER_API_KEY` with your OpenRouter API key
+4. Go to Settings → Pages → Source: "GitHub Actions"
+5. Push to main branch - the workflow will automatically build and deploy
+6. Your site will be available at `https://yourusername.github.io/repo-name`
+7. Users won't need to enter an API key!
+
+**Option 2: Manual deployment (users enter their own API key)**
+1. Fork this repository  
 2. Go to Settings → Pages
-3. Select "Deploy from a branch" 
+3. Select "Deploy from a branch"
 4. Choose `main` branch and `/ (root)`
-5. Your site will be available at `https://yourusername.github.io/llm-code-guesser`
+5. Your site will be available at `https://yourusername.github.io/repo-name`
 
 ### Netlify
 
@@ -58,7 +68,13 @@ A fun web game where you try to guess which AI model wrote a given piece of code
 
 ### Local Development
 
+**Without API key injection:**
 Simply open `index.html` in your web browser - no build process required!
+
+**With API key injection:**
+1. Set environment variable: `export OPENROUTER_API_KEY=your_key_here`
+2. Run build script: `./build.sh`
+3. Open `build/index.html` in your browser
 
 ## 🔧 Setup
 
