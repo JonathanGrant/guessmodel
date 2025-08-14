@@ -22,7 +22,10 @@ class LLMCodeGuesser {
             'anthropic/claude-sonnet-4',
             'anthropic/claude-3.7-sonnet',
             'anthropic/claude-3.5-haiku',
-            'x-ai/grok-4'
+            'x-ai/grok-4',
+            'z-ai/glm-4.5',
+            'qwen/qwen3-coder',
+            'moonshotai/kimi-k2'
         ];
 
         this.modelDisplayNames = {
@@ -40,7 +43,10 @@ class LLMCodeGuesser {
             'anthropic/claude-sonnet-4': 'Claude Sonnet 4',
             'anthropic/claude-3.7-sonnet': 'Claude 3.7 Sonnet',
             'anthropic/claude-3.5-haiku': 'Claude 3.5 Haiku',
-            'x-ai/grok-4': 'Grok-4'
+            'x-ai/grok-4': 'Grok-4',
+            'z-ai/glm-4.5': 'GLM-4.5',
+            'qwen/qwen3-coder': 'Qwen3-Coder',
+            'moonshotai/kimi-k2': 'Kimi K2'
         };
 
         this.codePrompts = [
