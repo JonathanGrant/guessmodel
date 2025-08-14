@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Code Guesser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 LLM Code Guesser</h1>
+            <p>Can you guess which AI model wrote this code?</p>
+        </header>
+
+        <div class="game-controls">
+            <div class="language-selector">
+                <label for="language">Programming Language:</label>
+                <select id="language">
+                    <option value="python" selected>Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="rust">Rust</option>
+                    <option value="go">Go</option>
+                    <option value="typescript">TypeScript</option>
+                </select>
+            </div>
+
+            <button id="generateBtn" class="generate-btn">Generate New Code</button>
+        </div>
+
+        <div class="code-section">
+            <pre><code id="codeDisplay" class="language-python">Loading...</code></pre>
+        </div>
+
+        <div class="guess-section">
+            <h3>Which model wrote this code?</h3>
+            <div class="model-buttons">
+                <button class="model-btn" data-model="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</button>
+                <button class="model-btn" data-model="anthropic/claude-3.5-haiku-20241022">Claude 3.5 Haiku</button>
+                <button class="model-btn" data-model="openai/gpt-4o">GPT-4o</button>
+                <button class="model-btn" data-model="openai/o1-mini">o1-mini</button>
+                <button class="model-btn" data-model="google/gemini-2.0-flash-exp">Gemini 2.0 Flash</button>
+                <button class="model-btn" data-model="google/gemini-exp-1206">Gemini Exp</button>
+                <button class="model-btn" data-model="anthropic/claude-3-opus-20240229">Claude 3 Opus</button>
+                <button class="model-btn" data-model="openai/gpt-4o-mini">GPT-4o Mini</button>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div id="resultMessage"></div>
+            <button id="nextRoundBtn" class="next-btn">Next Round</button>
+        </div>
+
+        <div class="score-section">
+            <div class="score">
+                <span>Score: <span id="score">0</span></span>
+                <span>Round: <span id="round">1</span></span>
+            </div>
+        </div>
+
+        <div class="api-key-section">
+            <input type="password" id="apiKey" placeholder="Enter OpenRouter API Key">
+            <button id="saveApiKey">Save Key</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
