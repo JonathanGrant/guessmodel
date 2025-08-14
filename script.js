@@ -10,10 +10,11 @@ class LLMCodeGuesser {
             'anthropic/claude-3-5-sonnet-20241022',
             'anthropic/claude-3-5-haiku-20241022', 
             'openai/gpt-4o',
-            'openai/o1-mini',
-            'google/gemini-2.0-flash-exp',
-            'google/gemini-exp-1206',
-            'anthropic/claude-3-opus-20240229',
+            'openai/o3-mini',
+            'openai/o4-mini',
+            'google/gemini-2.5-flash-exp',
+            'anthropic/claude-3-opus-4-1-20250805',
+            'anthropic/claude-3-5-sonnet-20250101',
             'openai/gpt-4o-mini'
         ];
 
@@ -21,10 +22,11 @@ class LLMCodeGuesser {
             'anthropic/claude-3-5-sonnet-20241022': 'Claude 3.5 Sonnet',
             'anthropic/claude-3-5-haiku-20241022': 'Claude 3.5 Haiku',
             'openai/gpt-4o': 'GPT-4o',
-            'openai/o1-mini': 'o1-mini',
-            'google/gemini-2.0-flash-exp': 'Gemini 2.0 Flash',
-            'google/gemini-exp-1206': 'Gemini Exp',
-            'anthropic/claude-3-opus-20240229': 'Claude 3 Opus',
+            'openai/o3-mini': 'o3-mini',
+            'openai/o4-mini': 'o4-mini',
+            'google/gemini-2.5-flash-exp': 'Gemini 2.5 Flash',
+            'anthropic/claude-3-opus-4-1-20250805': 'Claude 4.1 Opus',
+            'anthropic/claude-3-5-sonnet-20250101': 'Claude 4.0 Sonnet',
             'openai/gpt-4o-mini': 'GPT-4o Mini'
         };
 
