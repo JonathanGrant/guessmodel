@@ -7,27 +7,33 @@ class LLMCodeGuesser {
         this.gameActive = false;
         
         this.models = [
-            'anthropic/claude-3-5-sonnet-20241022',
-            'anthropic/claude-3-5-haiku-20241022', 
             'openai/gpt-4o',
-            'openai/o3-mini',
+            'openai/o3',
             'openai/o4-mini',
+            'openai/gpt-5-chat',
+            'openai/gpt-5',
+            'openai/gpt-oss-120b',
+            'openai/gpt-4.1',
             'google/gemini-2.5-flash-exp',
+            'google/gemini-2.5-flash-lite',
+            'google/gemini-2.5-pro',
             'anthropic/claude-3-opus-4-1-20250805',
-            'anthropic/claude-3-5-sonnet-20250101',
-            'openai/gpt-4o-mini'
+            'x-ai/grok-4'
         ];
 
         this.modelDisplayNames = {
-            'anthropic/claude-3-5-sonnet-20241022': 'Claude 3.5 Sonnet',
-            'anthropic/claude-3-5-haiku-20241022': 'Claude 3.5 Haiku',
             'openai/gpt-4o': 'GPT-4o',
-            'openai/o3-mini': 'o3-mini',
+            'openai/o3': 'o3',
             'openai/o4-mini': 'o4-mini',
+            'openai/gpt-5-chat': 'GPT-5 Chat',
+            'openai/gpt-5': 'GPT-5',
+            'openai/gpt-oss-120b': 'GPT OSS 120B',
+            'openai/gpt-4.1': 'GPT-4.1',
             'google/gemini-2.5-flash-exp': 'Gemini 2.5 Flash',
+            'google/gemini-2.5-flash-lite': 'Gemini 2.5 Flash Lite',
+            'google/gemini-2.5-pro': 'Gemini 2.5 Pro',
             'anthropic/claude-3-opus-4-1-20250805': 'Claude 4.1 Opus',
-            'anthropic/claude-3-5-sonnet-20250101': 'Claude 4.0 Sonnet',
-            'openai/gpt-4o-mini': 'GPT-4o Mini'
+            'x-ai/grok-4': 'Grok-4'
         };
 
         this.codePrompts = {
@@ -150,7 +156,7 @@ class LLMCodeGuesser {
             document.getElementById('codeDisplay').textContent = code;
             document.getElementById('codeDisplay').className = `language-${language}`;
             
-            this.enableModelButtons();
+            this.setupRandomModelButtons();
             this.gameActive = true;
             
         } catch (error) {
@@ -259,6 +265,43 @@ class LLMCodeGuesser {
         document.querySelectorAll('.model-btn').forEach(btn => {
             btn.disabled = true;
         });
+    }
+
+    setupRandomModelButtons() {
+        // Get 4 random models, ensuring the correct model is always included
+        let randomModels = [this.currentModel];
+        
+        // Get 3 other random models
+        const otherModels = this.models.filter(model => model !== this.currentModel);
+        for (let i = 0; i < 3; i++) {
+            const randomIndex = Math.floor(Math.random() * otherModels.length);
+            randomModels.push(otherModels.splice(randomIndex, 1)[0]);
+        }
+        
+        // Shuffle the array so correct answer isn't always first
+        randomModels = this.shuffleArray(randomModels);
+        
+        // Update the model buttons container
+        const container = document.querySelector('.model-buttons');
+        container.innerHTML = '';
+        
+        randomModels.forEach(model => {
+            const button = document.createElement('button');
+            button.className = 'model-btn';
+            button.dataset.model = model;
+            button.textContent = this.modelDisplayNames[model];
+            button.addEventListener('click', (e) => this.makeGuess(e.target.dataset.model));
+            container.appendChild(button);
+        });
+    }
+    
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
     }
 
     updateDisplay() {
