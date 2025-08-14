@@ -19,6 +19,9 @@ class LLMCodeGuesser {
             'google/gemini-2.5-flash-lite',
             'google/gemini-2.5-pro',
             'anthropic/claude-3-opus-4-1-20250805',
+            'anthropic/claude-sonnet-4',
+            'anthropic/claude-3.7-sonnet',
+            'anthropic/claude-3.5-haiku',
             'x-ai/grok-4'
         ];
 
@@ -34,6 +37,9 @@ class LLMCodeGuesser {
             'google/gemini-2.5-flash-lite': 'Gemini 2.5 Flash Lite',
             'google/gemini-2.5-pro': 'Gemini 2.5 Pro',
             'anthropic/claude-3-opus-4-1-20250805': 'Claude 4.1 Opus',
+            'anthropic/claude-sonnet-4': 'Claude Sonnet 4',
+            'anthropic/claude-3.7-sonnet': 'Claude 3.7 Sonnet',
+            'anthropic/claude-3.5-haiku': 'Claude 3.5 Haiku',
             'x-ai/grok-4': 'Grok-4'
         };
 
