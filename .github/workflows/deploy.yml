@@ -41,12 +41,19 @@ jobs:
           
           # Process script.js to inject API key if provided
           if [ -n "$OPENROUTER_API_KEY" ]; then
-            echo "Injecting API key into build..."
-            sed "s/this\.apiKey = localStorage\.getItem('openrouter_api_key') || '';/this.apiKey = localStorage.getItem('openrouter_api_key') || '$OPENROUTER_API_KEY';/" script.js > build/script.js
+            echo "✓ API key found, injecting into build..."
+            # Escape the API key for sed and inject it
+            ESCAPED_KEY=$(echo "$OPENROUTER_API_KEY" | sed 's/[[\.*^$()+?{|]/\\&/g')
+            sed "s/this\.apiKey = localStorage\.getItem('openrouter_api_key') || '';/this.apiKey = localStorage.getItem('openrouter_api_key') || '$ESCAPED_KEY';/" script.js > build/script.js
+            echo "✓ API key injected successfully"
           else
-            echo "No API key provided, using original script..."
+            echo "⚠ No API key provided - users will need to enter their own"
             cp script.js build/
           fi
+          
+          # Debug: Show first few lines of the built script
+          echo "=== First 10 lines of built script.js ==="
+          head -10 build/script.js
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
